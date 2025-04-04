@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+    Cadastrar Aluno - Strong Fitness
+{% endblock  %}
+{% block content %}
+    <link type="text/css" rel="stylesheet" href="{% static 'css/mascara.css' %}">
+    <div class="container mt-4">
+        <h3 class="display-6">Cadastrar Aluno</h3>
+        <div class="card">
+            <div class="card-body">
+                <form action="{% url 'create_alunos' %}" method="post" class="row">
+                    {% csrf_token %}
+                    {% for field in form %}
+                        <div class="col-md-6 mb-3">
+                            <label for="{{ field.id_for_label }}" class="mr-2">{{ field.label }}</label>
+                            {{ field }}
+                            {% if field.errors %}
+                            <div class="text-danger">
+                                {{ field.errors }}
+                            </div>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                    <button type="submit" class="btn btn-outline-primary mt-3">Cadastrar Aluno</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <a href="{% url 'get_alunos' %}" class="btn btn-light mt-3">Voltar Para Lista</a>
+    <script src="{% static 'js/mascara.js' %}"></script>
+{% endblock  %}

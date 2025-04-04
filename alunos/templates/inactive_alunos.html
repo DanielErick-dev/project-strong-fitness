@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+    Alunos Inativos - Strong Fitness
+{% endblock  %}
+{% block content %}
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <form action="{% url 'get_alunos' %}" method="get">
+                <div class="input-group">
+                    <input type="text" name="name" id="name" class="form-control"
+                    placeholder="Nome" value="{{ request.GET.name }}">
+                    <input type="text" name="cpf" id="cpf" class="form-control"
+                    placeholder="CPF" value="{{ request.GET.cpf }}">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-search"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Sobrenome</th>
+                    <th>CPF</th>
+                    <th>Status</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for aluno in inactive_alunos %}
+                    <tr>
+                        <td>{{ aluno.id }}</td>
+                        <td>{{ aluno.name|title }}</td>
+                        <td>{{ aluno.lastname|title }}</td>
+                        <td>{{ aluno.cpf }}</td>
+                        <td>{{ aluno.get_status_display }}</td>
+                        <td>
+                            <a href="{% url 'detail_alunos' aluno.id %}" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="top" title="Detalhes do Aluno">
+                                <i class="bi bi-eye"></i>
+                            </a>
+                            <a href="{% url 'update_alunos' aluno.id %}" class="btn btn-warning btn-sm"
+                            data-toggle="tooltip" data-placement="top" title="Editar Aluno">
+                                <i class="bi bi-pencil"></i>
+                            </a>
+                            <a href="{% url 'delete_alunos' aluno.id %}" class="btn btn-danger btn-sm"
+                            data-toggle="tooltip" data-placement="top" title="Deletar Aluno">
+                                <i class="bi bi-trash"></i>
+                            </a>
+                            <a href="{% url 'atualize_alunos' aluno.id %}" 
+                            class="btn btn-success btn-sm" 
+                            data-toggle="tooltip" data-placement="top" title="Atualizar Matricula do Aluno"
+                            onclick="confirmAtualize('{{ aluno.id }}', '{{ aluno.name|title }}', '{{ aluno.lastname|title }}', '{{ aluno.sexo }}');">
+                                <i class="bi bi-calendar-check"></i>
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% include 'components/_pagination.html' %}
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="{% static 'js/confirm_atualize.js' %}"></script>
+{% endblock  %}

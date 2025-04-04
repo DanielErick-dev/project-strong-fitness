@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}
+    Edição de Dados - Strong Fitness
+{% endblock  %}
+{% block content %}
+    <div class="container">
+        <h3 class="display-6">Editar Dados
+            {% if object.sexo == 'M' %}
+                do aluno
+            {% else %}
+                da aluna
+            {% endif %}
+            {{ object.name|title }} {{ object.lastname|title }}
+        </h3>
+        <div class="card">
+            <div class="card-body">
+                <form method="post" class="row">
+                    {% csrf_token %}
+                    {% for field in form %}
+                        <div class="col-md-6 mb-3">
+                            <label for="{{ field.id_for_label }}" class="mr-2">{{ field.label }}</label>
+                            {{ field }}
+                            {% if field.errors %}
+                            <div class="text-danger">
+                                {{ field.errors }}
+                            </div>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                    <button type="submit" class="btn btn-primary">Salvar Dados</button>
+                </form>
+            </div>
+        </div>
+        <a href="{% url 'get_alunos' %}" class="btn btn-light mt-3">Voltar Para Lista</a>
+        <script src="{% static 'js/mascara.js' %}"></script>
+    </div>
+{% endblock %}
