@@ -14,7 +14,7 @@ class AlunosForm(forms.ModelForm):
         r'^\d{2}9\d{8}$',
         'Telefone inválido'
     )
-   
+
     class Meta:
         model = Aluno
         fields = ['name', 'lastname', 'cpf', 'sexo', 'phone_number', 'date_of_birth']
