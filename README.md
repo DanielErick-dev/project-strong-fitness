@@ -4,7 +4,7 @@
 
 ## 📖 Sobre o Projeto
 
-O **Strong Fitness** é um sistema de software completo (Full-Stack) projetado para otimizar a gestão de alunos em uma academia. A aplicação automatiza a gestão de administrativas, fornece relatórios e oferece uma interface de gerenciamento intuitiva.
+O **Strong Fitness** é um sistema de software completo (Full-Stack) projetado para otimizar a gestão de alunos em uma academia. A aplicação automatiza tarefas administrativas, fornece relatórios e oferece uma interface de gerenciamento intuitiva.
 
 ---
 
@@ -33,15 +33,41 @@ O **Strong Fitness** é um sistema de software completo (Full-Stack) projetado p
 
 ---
 
-## 🚀 Como Rodar o Projeto
+## 📋 Pré-requisitos
 
-1.  Clone o repositório: `git clone https://github.com/DanielErick-dev/project-strong-fitness.git`
-2.  Navegue até o diretório do projeto.
-3.  Crie um arquivo `.env` baseado no `env.example` e preencha com suas credenciais.
-4.  Execute `docker-compose up --build` para construir e iniciar os containers.
-5.  Acesse `http://localhost:8000` no seu navegador.
+Antes de começar, garanta que você tenha as seguintes ferramentas instaladas em seu ambiente:
+
+- [Docker](https://www.docker.com/get-started/)
+- [Docker Compose](https://docs.docker.com/compose/install/)
 
 ---
+
+## 🚀 Como Rodar o Projeto
+
+**1. Clone o Repositório**
+```bash
+git clone https://github.com/DanielErick-dev/project-strong-fitness.git
+```
+
+**2. Configure as Variáveis de Ambiente**
+- Navegue até o diretório do projeto.
+- Crie um arquivo chamado `.env` usando o `.env.example` como base.
+- Preencha as variáveis de ambiente necessárias (chaves do Django, credenciais do banco de dados, etc.).
+
+**3. Configure as Notificações do WhatsApp (Opcional)**
+Para que o envio de relatórios via CallMeBot funcione, siga estes passos:
+   - **Adicione o Contato:** Salve o número do CallMeBot no seu celular: `+34 644 33 66 63`.
+   - **Envie a Mensagem de Ativação:** Abra o WhatsApp e envie a mensagem `Eu permito que o callmebot me envie mensagens` para o contato salvo.
+   - **Configure o `.env`:** Você receberá sua API Key via WhatsApp. Adicione-a, junto com seu número de telefone, no arquivo `.env` nas variáveis `CALLMEBOT_PHONE_NUMBER` e `CALLMEBOT_API_KEY`.
+
+**4. Suba os Containers**
+No terminal, dentro da pasta do projeto, execute o comando:
+```bash
+docker-compose up --build
+```
+
+**5. Acesse a Aplicação**
+Após a finalização do build, a aplicação estará disponível no seu navegador em `http://localhost:8000`.
 
 ## 📝 Roadmap e Próximos Passos
 
