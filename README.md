@@ -1,9 +1,10 @@
 # Academia Strong Fitness - Sistema de Gestão
 
-![Screenshot do Sistema](link_para_a_imagem_que_voce_me_mandou.png)
+![image](https://github.com/user-attachments/assets/c652936b-8e0d-49a3-8482-02e22de96b33)
+
 ## 📖 Sobre o Projeto
 
-O **Strong Fitness** é um sistema de software completo (Full-Stack) projetado para otimizar a gestão de alunos em uma academia. A aplicação automatiza tarefas financeiras e administrativas, fornece relatórios e oferece uma interface de gerenciamento intuitiva.
+O **Strong Fitness** é um sistema de software completo (Full-Stack) projetado para otimizar a gestão de alunos em uma academia. A aplicação automatiza a gestão de administrativas, fornece relatórios e oferece uma interface de gerenciamento intuitiva.
 
 ---
 
