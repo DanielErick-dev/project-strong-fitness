@@ -72,5 +72,4 @@ Após a finalização do build, a aplicação estará disponível no seu navegad
 ## 📝 Roadmap e Próximos Passos
 
 - [ ] Melhorar a responsividade do front-end para dispositivos móveis.
-- [ ] Criar documentação detalhada da API com Swagger.
 - [ ] Realizar o deploy da aplicação em um serviço de nuvem.
