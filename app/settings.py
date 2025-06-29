@@ -57,13 +57,17 @@ TEMPLATES = [
 WSGI_APPLICATION = "app.wsgi.application"
 
 DATABASES = {
-    "default": {
+    "postgres": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": "strong_db",
-        "USER": "postgres",
-        "PASSWORD": "postgres",
-        "HOST": "service_postgres_db",
-        "PORT": "5432",
+        "NAME": config('POSTGRES_NAME'),
+        "USER": config('POSTGRES_USER'),
+        "PASSWORD": config('POSTGRES_PASSWORD'),
+        "HOST": config('POSTGRES_HOST'),
+        "PORT": config('POSTGRES_PORT'),
+    },
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 

@@ -18,7 +18,7 @@ class Aluno(models.Model):
     sexo = models.CharField(max_length=1, choices=SEXO_CHOICES)
     phone_number = models.CharField(max_length=15, unique=True)
     date_of_birth = models.DateField(verbose_name='data de nascimento')
-    status = models.CharField(choices=STATUS, verbose_name='Status Do Aluno', default='A')
+    status = models.CharField(max_length=1, choices=STATUS, verbose_name='Status Do Aluno', default='A')
     created_at = models.DateTimeField(auto_now_add=True)
     expiration_date = models.DateField(null=True, blank=True)
     last_status_change = models.DateField(auto_now_add=True)
