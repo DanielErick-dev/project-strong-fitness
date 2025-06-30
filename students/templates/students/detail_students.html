@@ -1,0 +1,33 @@
+{% extends "core/base.html" %}
+{% load static %}
+{% block title %}
+    Detalhes Do Aluno {{ object.name|title }} - Strong Fitness
+{% endblock  %}
+{% block content %}
+    <link type="text/css" rel="stylesheet" href="{% static 'css/mascara.css' %}">
+    <div class="container mt-4">
+        <h3 class="display-4">Detalhes
+            {% if object.sexo == 'M' %}
+                do aluno
+            {% else %}
+                da aluna
+            {% endif %}
+            {{ object.name|title }} {{ object.lastname|title }}
+        </h3>
+        <div class="card">
+            <div class="card-body">
+                <div class="card-text mb-sm-1">Nome: {{ object.name|title }} {{ object.lastname|title }}</div>
+                <div class="card-text mb-sm-1" id="formatted-cpf">CPF: {{ object.cpf }}</div>
+                <div class="card-text mb-sm-1">Sexo: {{ object.get_sexo_display }}</div>
+                <div class="card-text mb-sm-1" id="formatted-phone">Número de Telefone: {{ object.phone_number }}</div>
+                <div class="card-text mb-sm-1">Data De Nascimento: {{ object.date_of_birth }}</div>
+                <div class="card-text mb-sm-1">Status: {{ object.get_status_display }}</div>
+                <div class="card-text mb-sm-1">Iniciação da Matricula: {{ object.created_at }}</div>
+                <div class="card-text mb-sm-1">Vencimento Mensal: {{ object.expiration_date }}</div>
+            </div>
+        </div>
+    </div>
+    <a href="{% url 'get_students' %}" class="btn btn-light mt-3">Voltar Para Lista</a>
+    <script src="{% static 'js/mascara.js' %}"></script>
+
+{% endblock %}
