@@ -1,8 +1,6 @@
-// Deixe claro que carregou
 console.log('confirm_atualize.js foi carregado');
 
-// Coloque a função no escopo global
-window.confirmAtualize = (event, pk, name, lastname, sexo) => {
+window.confirmAtualize = (event, href, name, lastname, sexo) => {
     console.log('confirmAtualize sendo executado');
     event.preventDefault();
 
@@ -27,7 +25,7 @@ window.confirmAtualize = (event, pk, name, lastname, sexo) => {
             });
 
             setTimeout(() => {
-                window.location.href = `atualize/${pk}/`;
+                window.location.href = href
             }, 2000);
         }
     });

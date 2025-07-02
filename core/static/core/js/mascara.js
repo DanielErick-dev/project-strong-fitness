@@ -76,7 +76,10 @@ function formatDisplayedData() {
         const fullText = phoneElement.textContent;
         const digits = fullText.replace(/\D/g, '');
         if (digits.length === 11) {
-            phoneElement.textContent = `Número de Telefone: (${digits.substring(0, 2)}) ${digits.substring(2, 7)}-${digits.substring(7)}`;
+            phoneElement.innerHTML = `
+                <span class="text-gray-400 block">Número de Telefone:</span>
+                <span class="break-all font-medium">${`(${digits.substring(0, 2)}) ${digits.substring(2, 7)}-${digits.substring(7)}`}</span>
+            `;
         }
     }
 }
