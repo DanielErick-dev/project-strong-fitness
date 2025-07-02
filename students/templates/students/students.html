@@ -103,7 +103,7 @@
                                 href="{% url 'atualize_students' student.id %}"
                                 title="Atualizar Matrícula"
                                 class="p-2 text-gray-400 hover:bg-gray-600 hover:text-white rounded-lg"
-                                onclick="confirmAtualize(event, '{{ student.id }}', '{{ student.name|escapejs }}', '{{ student.lastname|escapejs }}', '{{ student.sex }}')"
+                                onclick="confirmAtualize(event, this.href, '{{ student.name|escapejs }}', '{{ student.lastname|escapejs }}', '{{ student.sex }}')"
                             >
                                 <i class="bi bi-calendar-check-fill"></i> Atualizar
                             </a>
