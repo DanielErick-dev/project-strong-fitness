@@ -24,9 +24,9 @@ INSTALLED_APPS = [
 
 LOGIN_URL = 'login'
 
-LOGIN_REDIRECT_URL = '/students'
+LOGIN_REDIRECT_URL = '/students/list/'
 
-LOGOUT_REDIRECT_URL = '/login/'
+LOGOUT_REDIRECT_URL = '/'
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",

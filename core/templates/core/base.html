@@ -12,13 +12,11 @@
 
 </head>
 <body class="bg-gray-900 text-gray-200">
-
-    {# Incluímos o novo Navbar no topo #}
-    {% include 'core/components/_navbar.html' %}
-
+    {% if not request.path == '/' %}
+        {% include 'core/components/_navbar.html' %}
+    {% endif %}
     <main class="p-4 sm:p-6 md:p-8">
-        {% block content %}
-            
+        {% block content %}   
         {% endblock %}
     </main>
 
