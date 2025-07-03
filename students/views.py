@@ -7,6 +7,7 @@ from django.utils import timezone
 from django.db.models import Q
 from unidecode import unidecode
 from django.shortcuts import redirect
+from django.http import JsonResponse
 
 
 class GetStudents(LoginRequiredMixin, generic.ListView):
@@ -50,6 +51,13 @@ class DeleteStudents(LoginRequiredMixin, generic.DeleteView):
     model = Students
     template_name = 'students/delete_students.html'
     success_url = reverse_lazy('get_students')
+
+    def post(self, request, *args, **kwargs):
+        if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            self.object = self.get_object()
+            self.object.delete()
+            return JsonResponse({'success': True})
+        return super().post(request, *args, **kwargs)
 
 
 class UpdateStudents(LoginRequiredMixin, generic.UpdateView):

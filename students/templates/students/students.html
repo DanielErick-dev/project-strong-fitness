@@ -92,13 +92,13 @@
                             >
                                 <i class="bi bi-pencil-fill"></i> Editar
                             </a>
-                            <a
-                            href="{% url 'delete_students' student.id %}"
-                            title="Deletar"
-                            class="p-2 text-red-500 hover:bg-red-600 hover:text-white rounded-lg"
+                            <button
+                                onclick="confirmDelete('{{ student.id }}', '{{ student.name|escapejs }}', '{{ student.lastname|escapejs }}')"
+                                class="text-red-500 hover>text-red-700"
+                                title="Deletar Aluno"
                             >
-                                <i class="bi bi-trash-fill"></i> Deletar
-                            </a>
+                                <i class="bi bi-trash"></i> Deletar
+                            </button>
                             <a
                                 href="{% url 'atualize_students' student.id %}"
                                 title="Atualizar Matrícula"
@@ -128,4 +128,5 @@
 </div>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="{% static 'core/js/confirm_atualize.js' %}"></script>
+<script src="{% static 'core/js/confirm_delete.js' %}"></script>
 {% endblock %}
