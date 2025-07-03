@@ -1,90 +1,112 @@
 {% extends "core/base.html" %}
 {% load static %}
+
 {% block title %}
     Alunos Pendentes - Strong Fitness
-{% endblock  %}
+{% endblock %}
+
 {% block content %}
-    <div class="row mb-3">
-        <div class="col-md-6">
-            <form action="{% url 'get_students' %}" method="get">
-                <div class="input-group">
-                    <input type="text" name="name" id="name" class="form-control"
-                    placeholder="Nome" value="{{ request.GET.name }}">
-                    <input type="text" name="cpf" id="cpf" class="form-control"
-                    placeholder="CPF" value="{{ request.GET.cpf }}">
-                    <button type="submit" class="btn btn-primary">
-                        <i class="bi bi-search"></i>
-                    </button>
-                </div>
-            </form>
+<div class="max-w-6xl mx-auto px-4 mt-10">
+    <h2 class="text-3xl font-bold text-white mb-6">Alunos Pendentes</h2>
+
+    <form method="get" action="{% url 'get_students' %}" class="mb-6">
+        <div class="flex flex-col md:flex-row gap-4">
+            <input type="text" name="name" id="name" placeholder="Nome"
+                   value="{{ request.GET.name }}"
+                   class="w-full md:w-1/3 rounded-md p-2 bg-gray-800 text-white border border-gray-700 focus:ring focus:outline-none" />
+
+            <input type="text" name="cpf" id="cpf" placeholder="CPF"
+                   value="{{ request.GET.cpf }}"
+                   class="w-full md:w-1/3 rounded-md p-2 bg-gray-800 text-white border border-gray-700 focus:ring focus:outline-none" />
+
+            <button type="submit"
+                    class="bg-blue-600 hover:bg-blue-500 text-white font-semibold px-4 py-2 rounded-md transition">
+                <i class="bi bi-search"></i>
+            </button>
         </div>
-    </div>
-    <div class="table-responsive">
-        <table class="table table-striped table-bordered">
-            <thead class="thead-dark">
+    </form>
+
+    <div class="overflow-x-auto bg-gray-800 rounded-lg shadow-lg">
+        <table class="w-full text-left text-gray-300 text-sm">
+            <thead class="bg-gray-700 text-white">
                 <tr>
-                    <th>ID</th>
-                    <th>Nome</th>
-                    <th>Sobrenome</th>
-                    <th>CPF</th>
-                    <th>Status</th>
-                    <th>Aviso</th>
-                    <th>Ações</th>
+                    <th class="px-4 py-3">ID</th>
+                    <th class="px-4 py-3">Nome</th>
+                    <th class="px-4 py-3">Sobrenome</th>
+                    <th class="px-4 py-3">CPF</th>
+                    <th class="px-4 py-3">Status</th>
+                    <th class="px-4 py-3">Aviso</th>
+                    <th class="px-4 py-3">Ações</th>
                 </tr>
             </thead>
             <tbody>
-                {% for aluno in pending_alunos %}
-                    <tr>
-                        <td>{{ aluno.id }}</td>
-                        <td>{{ aluno.name|title }}</td>
-                        <td>{{ aluno.lastname|title }}</td>
-                        <td>{{ aluno.cpf }}</td>
-                        <td>{{ aluno.get_status_display }}</td>
-                        <td>
-                            {% if aluno.status == 'P' %}  
-                                {% with dias=aluno.days_to_inactivity %}
-                                {% if dias is not None %}  
-                                    <span class="badge bg-{% if dias >= 3 %}warning{% else %}danger{% endif %}">
+                {% for student in pending_students %}
+                <tr class="border-t border-gray-700 hover:bg-gray-700">
+                    <td class="px-4 py-3">{{ student.id }}</td>
+                    <td class="px-4 py-3">{{ student.name|title }}</td>
+                    <td class="px-4 py-3">{{ student.lastname|title }}</td>
+                    <td class="px-4 py-3">{{ student.cpf }}</td>
+                    <td class="px-4 py-3">{{ student.get_status_display }}</td>
+                    <td class="px-4 py-3">
+                        {% if aluno.status == 'P' %}
+                            {% with dias=aluno.days_to_inactivity %}
+                                {% if dias is not None %}
                                     {% if dias > 0 %}
-                                        Em {{ dias }} dia{{ dias|pluralize }} → Inativo
+                                        <span class="inline-block text-yellow-400 bg-yellow-800 text-xs px-2 py-1 rounded">
+                                            Em {{ dias }} dia{{ dias|pluralize }} → Inativo
+                                        </span>
                                     {% else %}
-                                        Vira inativo HOJE!
+                                        <span class="inline-block text-red-400 bg-red-800 text-xs px-2 py-1 rounded">
+                                            Vira inativo HOJE!
+                                        </span>
                                     {% endif %}
-                                    </span>
                                 {% else %}
-                                    <span class="text-muted">-</span>
+                                    <span class="text-gray-500">-</span>
                                 {% endif %}
-                                {% endwith %}
-                            {% else %}
-                                <span class="text-muted">-</span>
-                            {% endif %}
-                        </td>
-                        <td>
-                            <a href="{% url 'detail_alunos' aluno.id %}" class="btn btn-info btn-sm"
-                            data-toggle="tooltip" data-placement="top" title="Detalhes do Aluno">
-                                <i class="bi bi-eye"></i>
-                            </a>
-                            <a href="{% url 'update_alunos' aluno.id %}" class="btn btn-warning btn-sm"
-                            data-toggle="tooltip" data-placement="top" title="Editar Aluno">
-                                <i class="bi bi-pencil"></i>
-                            </a>
-                            <a href="{% url 'delete_alunos' aluno.id %}" class="btn btn-danger btn-sm"
-                            data-toggle="tooltip" data-placement="top" title="Deletar Aluno">
-                                <i class="bi bi-trash"></i>
-                            </a>
-                            <a href="{% url 'atualize_alunos' aluno.id %}" 
-                            class="btn btn-success btn-sm" 
-                            data-toggle="tooltip" data-placement="top" title="Atualizar Matricula do Aluno"
-                            onclick="confirmAtualize('{{ aluno.id }}', '{{ aluno.name|title }}', '{{ aluno.lastname|title }}', '{{ aluno.sexo }}');">
-                                <i class="bi bi-calendar-check"></i>
-                            </a>
-                        </td>
-                    </tr>
+                            {% endwith %}
+                        {% else %}
+                            <span class="text-gray-500">-</span>
+                        {% endif %}
+                    </td>
+                    <td class="px-4 py-3 flex flex-wrap gap-2">
+                        <a href="{% url 'detail_students' student.id %}"
+                           class="p-2 text-blue-400 hover:bg-blue-600 hover:text-white rounded-md"
+                           title="Detalhes do Aluno">
+                            <i class="bi bi-eye"></i>
+                        </a>
+                        <a href="{% url 'update_students' student.id %}"
+                           class="p-2 text-yellow-400 hover:bg-yellow-500 hover:text-white rounded-md"
+                           title="Editar Aluno">
+                            <i class="bi bi-pencil"></i>
+                        </a>
+                        <a href="{% url 'delete_students' student.id %}"
+                           class="p-2 text-red-400 hover:bg-red-600 hover:text-white rounded-md"
+                           title="Deletar Aluno">
+                            <i class="bi bi-trash"></i>
+                        </a>
+                        <a href="{% url 'atualize_students' student.id %}"
+                           onclick="confirmAtualize(event, this.href, '{{ student.name|escapejs }}', '{{ student.lastname|escapejs }}', '{{ student.sex }}')"
+                           class="p-2 text-green-400 hover:bg-green-600 hover:text-white rounded-md"
+                           title="Atualizar Matrícula do Aluno">
+                            <i class="bi bi-calendar-check"></i>
+                        </a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="7" class="px-4 py-4 text-center text-gray-400">Nenhum aluno pendente encontrado.</td>
+                </tr>
                 {% endfor %}
             </tbody>
         </table>
     </div>
-    {% include 'core/components/_pagination.html' %}
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="{% static 'js/confirm_atualize.js' %}"></script>
-{% endblock  %}
+    {% if page_obj.has_other_pages %}
+        <div class="p-4 border-t border-gray-700 bg-gray-800/50">
+            {% include 'core/components/_pagination.html' %}
+        </div>
+    {% endif %}
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="{% static 'js/confirm_atualize.js' %}"></script>
+{% endblock %}
