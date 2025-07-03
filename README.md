@@ -70,6 +70,4 @@ docker-compose up --build
 Após a finalização do build, a aplicação estará disponível no seu navegador em `http://localhost:8000`.
 
 ## 📝 Roadmap e Próximos Passos
-
-- [ ] Melhorar a responsividade do front-end para dispositivos móveis.
 - [ ] Realizar o deploy da aplicação em um serviço de nuvem.
