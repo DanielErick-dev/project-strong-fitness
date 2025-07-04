@@ -1,7 +1,4 @@
-console.log('confirm_atualize.js foi carregado');
-
 window.confirmAtualize = (event, href, name, lastname, sexo) => {
-    console.log('confirmAtualize sendo executado');
     event.preventDefault();
 
     Swal.fire({
@@ -11,9 +8,11 @@ window.confirmAtualize = (event, href, name, lastname, sexo) => {
             : `Deseja atualizar o pagamento da aluna ${name} ${lastname}?`,
         icon: "warning",
         showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Sim, Atualizar"
+        confirmButtonColor: "#22c55e",
+        cancelButtonColor: "#334155",
+        confirmButtonText: "Sim, Atualizar",
+        background: '#1e293b',
+        color: '#f1f5f9'
     }).then((result) => {
         if (result.isConfirmed) {
             Swal.fire({
@@ -22,11 +21,32 @@ window.confirmAtualize = (event, href, name, lastname, sexo) => {
                     ? `Pagamento do aluno ${name} realizado com sucesso`
                     : `Pagamento da aluna ${name} realizado com sucesso`,
                 icon: "success",
+                background: '#1e293b',
+                color: '#f1f5f9',
+                confirmButtonColor: "#22c55e"
             });
 
             setTimeout(() => {
-                window.location.href = href
+                window.location.href = href;
             }, 2000);
         }
     });
 };
+
+function getCSRFToken(){
+    const cookie = document.cookie.split('; ').find(row => row.startsWith('csrftoken='));
+    return cookie ? cookie.split('=')[1] : '';
+
+}
+
+function showToast(message, icon){
+    Swal.fire({
+        toast: true,
+        position: 'top-end',
+        icon: icon,
+        title: message,
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: true,
+    });
+}

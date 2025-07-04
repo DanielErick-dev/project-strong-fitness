@@ -4,9 +4,12 @@ function confirmDelete(pk, name, lastname) {
         text: `Deseja excluir o aluno: ${name} ${lastname}?`,
         icon: 'warning',
         showCancelButton: true,
-        confirmButtonColor: '#d33',
-        cancelButtonColor: '#3085d6',
-        confirmButtonText: 'Sim, Deletar'
+        confirmButtonColor: '#22c55e',
+        cancelButtonColor: '#334155', 
+        confirmButtonText: 'Sim, Deletar',
+        cancelButtonText: 'Cancelar',
+        background: '#1e293b', 
+        color: '#f1f5f9'         
     }).then((result) => {
         if (result.isConfirmed) {
             fetch(`/students/delete/${pk}/`, {
@@ -18,9 +21,9 @@ function confirmDelete(pk, name, lastname) {
             })
             .then(response => {
                 if (response.ok){
-                    showToast('Aluno excluido com sucesso!', 'success');
+                    showToast('Aluno excluído com sucesso!', 'success');
                     setTimeout(() => {
-                        window.location.href = '/students/list/'
+                        window.location.href = '/students/list/';
                     }, 1500);
                 } else {
                     showToast('Erro ao excluir Aluno!', 'error');
@@ -29,7 +32,6 @@ function confirmDelete(pk, name, lastname) {
         }
     });
 }
-
 function getCSRFToken(){
     const cookie = document.cookie.split('; ').find(row => row.startsWith('csrftoken='));
     return cookie ? cookie.split('=')[1] : '';
