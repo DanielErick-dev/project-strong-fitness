@@ -21,7 +21,7 @@ class Students(models.Model):
     status = models.CharField(max_length=1, choices=STATUS, verbose_name='Status Do Aluno', default='A')
     created_at = models.DateTimeField(auto_now_add=True)
     expiration_date = models.DateField(null=True, blank=True)
-    last_status_change = models.DateField(auto_now_add=True)
+    last_status_change = models.DateField(auto_now=True)
 
     def __str__(self):
         return f"{self.name} {self.lastname}"
