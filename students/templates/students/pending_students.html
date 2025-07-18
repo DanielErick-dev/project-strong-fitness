@@ -48,12 +48,12 @@
                     <td class="px-4 py-3">{{ student.cpf }}</td>
                     <td class="px-4 py-3">{{ student.get_status_display }}</td>
                     <td class="px-4 py-3">
-                        {% if aluno.status == 'P' %}
-                            {% with dias=aluno.days_to_inactivity %}
-                                {% if dias is not None %}
-                                    {% if dias > 0 %}
+                        {% if student.status == 'P' %}
+                            {% with pendent_days=student.days_to_inactivity %}
+                                {% if pendent_days is not None %}
+                                    {% if pendent_days > 0 %}
                                         <span class="inline-block text-yellow-400 bg-yellow-800 text-xs px-2 py-1 rounded">
-                                            Em {{ dias }} dia{{ dias|pluralize }} → Inativo
+                                            Em {{ pendent_days }} dia{{ pendent_days|pluralize }} → Inativo
                                         </span>
                                     {% else %}
                                         <span class="inline-block text-red-400 bg-red-800 text-xs px-2 py-1 rounded">
