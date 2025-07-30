@@ -13,7 +13,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-RUN SECRET_KEY=dummy-key-for-build DEBUG=False ENVIRONMENT=production python manage.py collectstatic --no-input
+RUN IS_BUILD_PHASE=True python manage.py collectstatic --no-input
 
 RUN (crontab -l 2>/dev/null; \
      echo "*/3 * * * * cd /strongfitness && /usr/local/bin/python manage.py send_message >> /var/log/cron.log 2>&1"; \

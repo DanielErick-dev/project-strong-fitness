@@ -5,15 +5,18 @@ import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-ENVIRONMENT = config('ENVIRONMENT', default='development')
-if ENVIRONMENT == 'production':
-    SECRET_KEY = config('SECRET_KEY')
-    DEBUG = False
-    ALLOWED_HOSTS = config('ALLOWED_HOSTS', default=''.split(','))
-else:
-    SECRET_KEY = config('SECRET_KEY', default='django-insecure-local-dev-key-!@#$%^&*()')
-    DEBUG = True
-    ALLOWED_HOSTS = ['*']
+IS_BUILD_PHASE = config('IS_BUILD_PHASE', default=False, cast=bool)
+
+if not IS_BUILD_PHASE:
+    ENVIRONMENT = config('ENVIRONMENT', default='development')
+    if ENVIRONMENT == 'production':
+        SECRET_KEY = config('SECRET_KEY')
+        DEBUG = False
+        ALLOWED_HOSTS = config('ALLOWED_HOSTS', default=''.split(','))
+    else:
+        SECRET_KEY = config('SECRET_KEY', default='django-insecure-local-dev-key-!@#$%^&*()')
+        DEBUG = True
+        ALLOWED_HOSTS = ['*']
 
 
 INSTALLED_APPS = [
@@ -65,27 +68,28 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "core.wsgi.application"
 
-if ENVIRONMENT == 'production':
-    DATABASES = {
-        'default': dj_database_url.config(conn_max_age=600)
-    }
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
+if not IS_BUILD_PHASE:
+    if ENVIRONMENT == 'production':
+        DATABASES = {
+            'default': dj_database_url.config(conn_max_age=600)
         }
-    }
-    DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.postgresql_psycopg2",
-            "NAME": config('POSTGRES_DB'),
-            "USER": config('POSTGRES_USER'),
-            "PASSWORD": config('POSTGRES_PASSWORD'),
-            "HOST": config('POSTGRES_HOST'),
-            "PORT": config('POSTGRES_PORT', cast=int),
+    else:
+        DATABASES = {
+            'default': {
+                'ENGINE': 'django.db.backends.sqlite3',
+                'NAME': BASE_DIR / 'db.sqlite3',
+            }
         }
-    }
+        DATABASES = {
+            "default": {
+                "ENGINE": "django.db.backends.postgresql_psycopg2",
+                "NAME": config('POSTGRES_DB'),
+                "USER": config('POSTGRES_USER'),
+                "PASSWORD": config('POSTGRES_PASSWORD'),
+                "HOST": config('POSTGRES_HOST'),
+                "PORT": config('POSTGRES_PORT', cast=int),
+            }
+        }
 
 AUTH_PASSWORD_VALIDATORS = [
     {
