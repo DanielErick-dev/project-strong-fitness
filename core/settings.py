@@ -1,14 +1,20 @@
 from pathlib import Path
 from decouple import config
+import dj_database_url
 import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = config('SECRET_KEY')
+ENVIRONMENT = config('ENVIRONMENT', default='development')
+if ENVIRONMENT == 'production':
+    SECRET_KEY = config('SECRET_KEY')
+    DEBUG = False
+    ALLOWED_HOSTS = config('ALLOWED_HOSTS', default=''.split(','))
+else:
+    SECRET_KEY = config('SECRET_KEY', default='django-insecure-local-dev-key-!@#$%^&*()')
+    DEBUG = True
+    ALLOWED_HOSTS = ['*']
 
-DEBUG = config('DEBUG', cast=bool)
-
-ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -30,6 +36,7 @@ LOGOUT_REDIRECT_URL = '/'
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -58,20 +65,29 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "core.wsgi.application"
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": config('POSTGRES_DB'),
-        "USER": config('POSTGRES_USER'),
-        "PASSWORD": config('POSTGRES_PASSWORD'),
-        "HOST": config('POSTGRES_HOST'),
-        "PORT": config('POSTGRES_PORT'),
-    },
-    'sql': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+if ENVIRONMENT == 'production':
+    DATABASES = {
+        'default': dj_database_url.config(
+            default=config('DATABASE_URL')
+        )
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql_psycopg2",
+            "NAME": config('POSTGRES_DB'),
+            "USER": config('POSTGRES_USER'),
+            "PASSWORD": config('POSTGRES_PASSWORD'),
+            "HOST": config('POSTGRES_HOST'),
+            "PORT": config('POSTGRES_PORT', cast=int),
+        }
+    }
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -101,15 +117,11 @@ USE_I18N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.1/howto/static-files/
-
 STATIC_URL = "static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 STATICFILES_DIRS = []
 
-# Default primary key field type
-# https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
