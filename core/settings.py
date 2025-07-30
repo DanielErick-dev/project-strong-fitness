@@ -67,9 +67,7 @@ WSGI_APPLICATION = "core.wsgi.application"
 
 if ENVIRONMENT == 'production':
     DATABASES = {
-        'default': dj_database_url.config(
-            default=config('DATABASE_URL')
-        )
+        'default': dj_database_url.config(conn_max_age=600)
     }
 else:
     DATABASES = {
