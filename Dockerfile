@@ -13,6 +13,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
+RUN python manage.py collectstatic --no-input
+
 RUN (crontab -l 2>/dev/null; \
      echo "*/3 * * * * cd /strongfitness && /usr/local/bin/python manage.py send_message >> /var/log/cron.log 2>&1"; \
      echo "*/3 * * * * cd /strongfitness && /usr/local/bin/python manage.py update_user_status >> /var/log/cron.log 2>&1") | crontab
