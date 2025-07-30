@@ -9,6 +9,9 @@ IS_BUILD_PHASE = config('IS_BUILD_PHASE', default=False, cast=bool)
 
 if not IS_BUILD_PHASE:
     ENVIRONMENT = config('ENVIRONMENT', default='development')
+    CALLMEBOT_URL = config('CALLMEBOT_URL')
+    CALLMEBOT_API_KEY = config('CALLMEBOT_API_KEY')
+    CALLMEBOT_PHONE_NUMBER = config('CALLMEBOT_PHONE_NUMBER')
     if ENVIRONMENT == 'production':
         SECRET_KEY = config('SECRET_KEY')
         DEBUG = False
@@ -127,8 +130,3 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-CALLMEBOT_URL = config('CALLMEBOT_URL')
-
-CALLMEBOT_API_KEY = config('CALLMEBOT_API_KEY')
-
-CALLMEBOT_PHONE_NUMBER = config('CALLMEBOT_PHONE_NUMBER')
