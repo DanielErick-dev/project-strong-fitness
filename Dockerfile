@@ -19,7 +19,7 @@ RUN (crontab -l 2>/dev/null; \
      echo "*/3 * * * * cd /strongfitness && /usr/local/bin/python manage.py send_message >> /var/log/cron.log 2>&1"; \
      echo "*/3 * * * * cd /strongfitness && /usr/local/bin/python manage.py update_user_status >> /var/log/cron.log 2>&1") | crontab
 
-EXPOSE 8000
+EXPOSE 8080
 
 # para ambiente de desenvolvimento
 #CMD ["sh", "-c", "cron && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"]
