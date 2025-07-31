@@ -3,6 +3,6 @@ builder = "DOCKERFILE"
 
 [deploy]
 releaseCommand = "python manage.py migrate --no-input"
-startCommand = "gunicorn core.wsgi:application --bind 0.0.0.0:$PORT"
+startCommand = "gunicorn --workers 1 --threads 2 --timeout 60 --log-level=debug core.wsgi:application"
 restartPolicyType = "ON_FAILURE"
 restartPolicyMaxRetries = 10
