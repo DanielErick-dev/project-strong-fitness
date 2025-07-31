@@ -12,10 +12,11 @@ def teste_view(request):
 
 
 urlpatterns = [
+    path('teste/', teste_view, name='teste'),
     path('', lambda request: HttpResponse('<h1> funcionou essa merda </h1>')),
     path("admin/", admin.site.urls),
     # path("students/", include("students.urls")),
-    # path("", views.LoginView.as_view(), name='login'),
-    # path("logout/", views.LogoutView.as_view(), name='logout'),
+    path("", views.LoginView.as_view(), name='login'),
+    path("logout/", views.LogoutView.as_view(), name='logout'),
     # path('teste/', lambda request: HttpResponse("<h1>A aplicação está respondendo!</h1>")),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
