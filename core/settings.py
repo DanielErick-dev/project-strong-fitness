@@ -15,7 +15,7 @@ if not IS_BUILD_PHASE:
     if ENVIRONMENT == 'production':
         SECRET_KEY = config('SECRET_KEY')
         DEBUG = False
-        ALLOWED_HOSTS = config('ALLOWED_HOSTS', default=''.split(','))
+        ALLOWED_HOSTS = config('ALLOWED_HOSTS').split(',')
     else:
         SECRET_KEY = config('SECRET_KEY', default='django-insecure-local-dev-key-!@#$%^&*()')
         DEBUG = True
